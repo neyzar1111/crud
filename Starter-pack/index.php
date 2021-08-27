@@ -20,20 +20,26 @@ $databaseManager->connect();
 // Update the naming if you'd like to work with another collection
 $cardRepository = new CardRepository($databaseManager);
 //(new CardRepository($databaseManager))->get(); short version
-$cards = $cardRepository->get();
-//$update = $cardRepository->update();
+
+
+
 if(isset($_POST['submitChanges']) && $_POST["bookName"]){
-//    $update = new CardRepository($databaseManager);
-//    $update = $update ->update();
     $cardRepository->update();
+    $cards = $cardRepository->get();
+}
+
+if(isset($_POST['submitNewCard']) && $_POST["userCard"]){
+    $newUser = $cardRepository->create();
+    $cards = $cardRepository->get();
+}
+
+if(isset($_POST['submitChanges']) && $_POST["bookName"]||isset($_POST['submitNewCard'])){
     $cards = $cardRepository->get();
     require 'overview.php';
 } else{
     $cards = $cardRepository->get();
     require 'overview.php';
 }
-
-
 $connection = $databaseManager -> connection;
 // Load your view
 // Tip: you can load this dynamically and based on a variable, if you want to load another view

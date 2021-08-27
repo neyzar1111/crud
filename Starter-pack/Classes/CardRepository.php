@@ -15,6 +15,11 @@ class CardRepository
 
     public function create(): void
     {
+        if(isset($_POST['submitNewCard'])) {
+            $userCard = $_POST["userCard"];
+            $sql = "INSERT INTO crud_table (book_name) VALUES ('$userCard')";
+            $this->databaseManager->connection->query($sql);
+        }
 
     }
 
@@ -32,15 +37,6 @@ class CardRepository
         $sql = "SELECT * FROM crud_table";
         $databaseConnection = $this->databaseManager->connection;
         $result = $databaseConnection->query($sql)->fetchAll();
-
-//        return [
-//            ['name' => 'dummy one'],
-//            ['name' => 'dummy two'],
-//        ];
-//        var_dump("");
-//        var_dump($result);
-
-
         return $result;
 
         // We get the database connection first, so we can apply our queries with it
